@@ -1,14 +1,19 @@
 {
   "name": "twitter-clone",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Twitter clone application",
   "main": "backend/server.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon backend/server.js",
-    "start": "cross-env NODE_ENV=production node backend/server.js",
-    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
+    "start": "npm run prestart && cross-env NODE_ENV=production node backend/server.js",
+    "prestart": "npm run build",
+    "build": "npm install --prefix frontend && npm run build --prefix frontend"
   },
-  "keywords": [],
+  "keywords": [
+    "twitter",
+    "clone",
+    "social-media"
+  ],
   "author": "",
   "type": "module",
   "license": "ISC",
