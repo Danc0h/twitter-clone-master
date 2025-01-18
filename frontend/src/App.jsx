@@ -18,18 +18,23 @@ function App() {
   const { data: authUser, isLoading } = useQuery({
     queryKey: ["authUser"],
     queryFn: async () => {
-      try {
-        const res = await fetch("/api/auth/me");
-        const data = await res.json();
-        if (data.error) return null;
-        if (!res.ok) {
-          throw new Error(data.error || "Something went wrong");
+      const token = localStorage.getItem("token");
+      console.log(token);
+      const res = await fetch(
+        `/api/auth/me`,
+
+        {
+          headers: {
+            //Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
-        console.log("authUser is here:", data);
-        return data;
-      } catch (error) {
-        throw new Error(error);
+      );
+      if (!res.ok) {
+        localStorage.removeItem("token"); // Clean up invalid token
+        throw new Error("Unauthorized");
       }
+      return res.json();
     },
     retry: false,
   });
